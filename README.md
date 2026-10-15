@@ -33,70 +33,89 @@ To develop a Bayesian Network-based framework to predict railway delay categorie
 
 
 ### Methodology
-## Methodology
 
-**1. Data Preprocessing and Delay Classification**
+#### 1. Data Preprocessing and Delay Classification
 
-Historical transportation records are cleaned and relevant features are selected. Arrival delays are converted into three categories: ON_TIME (≤ 5 minutes), MINOR (> 5 and ≤ 15 minutes), and MAJOR (> 15 minutes).
+Historical transportation records are cleaned, and relevant features are selected. Arrival delays are converted into three categories: ON_TIME ($\leq 5$ minutes), MINOR ($> 5$ and $\leq 15$ minutes), and MAJOR ($> 15$ minutes).
 
-\[
-d_i^{+}=\max(0,d_i)
-\]
+The non-negative arrival delay is calculated as:
 
-Here, \(d_i\) is the recorded arrival delay and \(d_i^{+}\) is its non-negative value used for classification.
+$$
+d_i^{+} = \max(0, d_i)
+$$
 
-**2. Bayesian Network Construction**
+Here, $d_i$ is the recorded arrival delay, and $d_i^{+}$ is its non-negative value used for classification.
+
+#### 2. Bayesian Network Construction
 
 A Bayesian Network (BN) is constructed using a predefined directed acyclic graph (DAG), where nodes represent delay-related variables and directed edges represent their dependencies. Conditional probability distributions are estimated using the Bayesian Dirichlet equivalent uniform (BDeu) method with an equivalent sample size of 10.
 
-\[
-P(X_1,\ldots,X_n)=
-\prod_{i=1}^{n}P(X_i\mid Pa(X_i))
-\]
+The joint probability distribution is factorized as:
 
-Here, \(Pa(X_i)\) represents the parent variables of \(X_i\). This factorization allows the joint probability of the variables to be represented through local conditional probabilities.
+$$
+P(X_1, X_2, \ldots, X_n)
+=
+\prod_{i=1}^{n} P(X_i \mid Pa(X_i))
+$$
 
-**3. Probabilistic Inference and Delay Prediction**
+Here, $Pa(X_i)$ represents the parent variables of $X_i$. This factorization allows the joint probability of the variables to be represented through local conditional probabilities.
+
+#### 3. Probabilistic Inference and Delay Prediction
 
 Variable Elimination is used to calculate the posterior probability of each delay category given the observed evidence, such as available operational and timing information.
 
-\[
-P(C=c\mid E)=
-\frac{P(C=c,E)}{P(E)}
-\]
+The posterior probability is calculated as:
+
+$$
+P(C=c \mid E)
+=
+\frac{P(C=c, E)}{P(E)}
+$$
 
 The predicted category is selected using the maximum posterior probability:
 
-\[
-\hat{C}=\arg\max_{c\in\mathcal{C}}P(C=c\mid E)
-\]
+$$
+\hat{C}
+=
+\arg\max_{c \in \mathcal{C}} P(C=c \mid E)
+$$
 
-Here, \(C\) denotes the delay category and \(E\) denotes the observed evidence. The model therefore provides probabilities for ON_TIME, MINOR, and MAJOR delays.
+Here, $C$ denotes the delay category, $E$ denotes the observed evidence, and $\mathcal{C}$ represents the set of possible delay categories. The model therefore provides probabilities for ON_TIME, MINOR, and MAJOR delays.
 
-**4. Delay Propagation Analysis**
+#### 4. Delay Propagation Analysis
 
 To investigate potential delay propagation, historical arrival events are matched with subsequent departure events at the same station, on the same calendar day, within a 120-minute window, excluding records with the same train number. The conditional probability of the next departure's delay category is calculated for each previous arrival category.
 
-\[
-P(B=b\mid A=a)=
-\frac{N(A=a,B=b)}{N(A=a)}
-\]
+The conditional probability is calculated as:
 
-Here, \(A\) is the previous arrival delay category, \(B\) is the next candidate departure delay category, and \(N\) represents the corresponding event counts. This analysis identifies historical associations between delay categories but does not establish causation or confirm that the movements are operationally connected.
+$$
+P(B=b \mid A=a)
+=
+\frac{N(A=a, B=b)}{N(A=a)}
+$$
 
-**5. Model Evaluation**
+Here, $A$ is the previous arrival delay category, $B$ is the next candidate departure delay category, and $N$ represents the corresponding event counts. This analysis identifies historical associations between delay categories but does not establish causation or confirm that the movements are operationally connected.
+
+#### 5. Model Evaluation
 
 The model is evaluated using a stratified 80:20 train-test split, with performance metrics calculated on a sample of 500 test records. Accuracy, balanced accuracy, precision, recall, F1-score, and a confusion matrix are used to assess predictive performance.
 
-\[
-\text{Accuracy}=
+**Accuracy** measures the proportion of correct predictions:
+
+$$
+\text{Accuracy}
+=
 \frac{\text{Correct Predictions}}
 {\text{Total Predictions}}
-\]
+$$
 
-\[
-\text{Balanced Accuracy}=
-\frac{1}{K}\sum_{k=1}^{K}\text{Recall}_k
-\]
+**Balanced Accuracy** measures the average recall across all delay categories:
 
-Here, \(K=3\) represents the three delay categories. Balanced accuracy is particularly useful for evaluating performance when the delay categories are unevenly distributed.
+$$
+\text{Balanced Accuracy}
+=
+\frac{1}{K}
+\sum_{k=1}^{K} \text{Recall}_k
+$$
+
+Here, $K=3$ represents the three delay categories. Balanced accuracy is particularly useful for evaluating performance when the delay categories are unevenly distributed.
