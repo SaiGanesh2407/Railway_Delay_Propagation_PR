@@ -93,3 +93,13 @@ Here, $A$ is the previous arrival delay category, $B$ is the next candidate depa
 The model is evaluated using a stratified 80:20 train-test split, with performance metrics calculated on a sample of 500 test records. Accuracy, balanced accuracy, precision, recall, F1-score, and a confusion matrix are used to assess predictive performance.
 
 Here, $K=3$ represents the three delay categories. Balanced accuracy is particularly useful for evaluating performance when the delay categories are unevenly distributed.
+
+
+### Conclusion
+This project presents a Bayesian Network-based framework for modeling uncertainty in delay prediction and analyzing potential delay propagation between transportation movements. The model estimates the probabilities of ON_TIME, MINOR, and MAJOR delay categories using probabilistic inference. Historical station-based analysis further reveals that the probability of a major delay in the next candidate departure increases when the preceding arrival has a major delay. Although the results demonstrate the potential of probabilistic reasoning for understanding delay patterns, the model's ability to identify minority delay categories requires improvement. Future work includes validating the model using an authentic railway dataset, improving prediction performance, and exploring decision-support strategies for delay management.
+
+### Requirements
+
+- Python 3.10 or newer recommended
+- pip
+- The source CSV with the expected fields
