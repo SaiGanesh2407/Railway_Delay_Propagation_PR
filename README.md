@@ -53,9 +53,7 @@ A Bayesian Network (BN) is constructed using a predefined directed acyclic graph
 The joint probability distribution is factorized as:
 
 $$
-P(X_1, X_2, \ldots, X_n)
-=
-\prod_{i=1}^{n} P(X_i \mid Pa(X_i))
+P(X_1, X_2, \ldots, X_n) = \prod_{i=1}^{n} P(X_i \mid Pa(X_i))
 $$
 
 Here, $Pa(X_i)$ represents the parent variables of $X_i$. This factorization allows the joint probability of the variables to be represented through local conditional probabilities.
@@ -67,17 +65,13 @@ Variable Elimination is used to calculate the posterior probability of each dela
 The posterior probability is calculated as:
 
 $$
-P(C=c \mid E)
-=
-\frac{P(C=c, E)}{P(E)}
+P(C=c \mid E) = \frac{P(C=c, E)}{P(E)}
 $$
 
 The predicted category is selected using the maximum posterior probability:
 
 $$
-\hat{C}
-=
-\arg\max_{c \in \mathcal{C}} P(C=c \mid E)
+\hat{C} = \arg\max_{c \in \mathcal{C}} P(C=c \mid E)
 $$
 
 Here, $C$ denotes the delay category, $E$ denotes the observed evidence, and $\mathcal{C}$ represents the set of possible delay categories. The model therefore provides probabilities for ON_TIME, MINOR, and MAJOR delays.
@@ -89,9 +83,7 @@ To investigate potential delay propagation, historical arrival events are matche
 The conditional probability is calculated as:
 
 $$
-P(B=b \mid A=a)
-=
-\frac{N(A=a, B=b)}{N(A=a)}
+P(B=b \mid A=a) = \frac{N(A=a, B=b)}{N(A=a)}
 $$
 
 Here, $A$ is the previous arrival delay category, $B$ is the next candidate departure delay category, and $N$ represents the corresponding event counts. This analysis identifies historical associations between delay categories but does not establish causation or confirm that the movements are operationally connected.
