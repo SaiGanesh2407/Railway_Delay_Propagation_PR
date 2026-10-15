@@ -92,22 +92,4 @@ Here, $A$ is the previous arrival delay category, $B$ is the next candidate depa
 
 The model is evaluated using a stratified 80:20 train-test split, with performance metrics calculated on a sample of 500 test records. Accuracy, balanced accuracy, precision, recall, F1-score, and a confusion matrix are used to assess predictive performance.
 
-**Accuracy** measures the proportion of correct predictions:
-
-$$
-\text{Accuracy}
-=
-\frac{\text{Correct Predictions}}
-{\text{Total Predictions}}
-$$
-
-**Balanced Accuracy** measures the average recall across all delay categories:
-
-$$
-\text{Balanced Accuracy}
-=
-\frac{1}{K}
-\sum_{k=1}^{K} \text{Recall}_k
-$$
-
 Here, $K=3$ represents the three delay categories. Balanced accuracy is particularly useful for evaluating performance when the delay categories are unevenly distributed.
